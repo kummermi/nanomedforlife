@@ -1,0 +1,29 @@
+{
+    "name": "nanoMedForLife",
+    "description": "",
+    "dependencies": {
+        "core": "*",
+        "radio": "*",
+        "microphone": "*",
+        "magnetisches Spielfeld mit neopixel": "github:mint-n-pepper/magnetisches-spielfeld-mit-neopixel#v0.1.9",
+        "handlebit": "github:mint-n-pepper/handlebit_controller#v0.3.1"
+    },
+    "files": [
+        "main.blocks",
+        "main.ts",
+        "README.md",
+        "main.py"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "targetVersions": {
+        "target": "6.0.28",
+        "pxt": "9.0.12",
+        "targetId": "microbit"
+    },
+    "supportedTargets": [
+        "microbit"
+    ],
+    "preferredEditor": "tsprj"
+}
