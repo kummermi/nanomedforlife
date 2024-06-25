@@ -1,6 +1,7 @@
 {
     "name": "nanoMedForLife",
-    "description": "",
+    "description": "A library for unified catheter steering control",
+    "version": "0.1.0",
     "dependencies": {
         "core": "*",
         "radio": "*",
@@ -11,12 +12,12 @@
     "files": [
         "main.blocks",
         "main.ts",
-        "README.md",
-        "main.py"
+        "README.md"
     ],
     "testFiles": [
         "test.ts"
     ],
+    "public": true,
     "targetVersions": {
         "target": "6.0.28",
         "pxt": "9.0.12",
