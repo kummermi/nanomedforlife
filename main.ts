@@ -104,6 +104,7 @@ namespace nanoMedForLife {
     * Handle received number with a callback
     * @param callback function to handle the event
     */
+    //% weight=86 blockId=receivingValues block="Advancerwerte Lesen"
     export function onReceivedNumberHadler(callback: () => void): void {
         radio.onReceivedNumber(function (receivedNumber: number){
             lastReceivedNumber = receivedNumber
@@ -221,7 +222,7 @@ namespace nanoMedForLife {
      * Function sending the advancer joystick deflection along X-axis to the advancer driver
      * 
      */
-    //% weight=86 blockId=sendAdvancerCommand block="Advancerjoystick auslesen und an Advancer senden"
+    //% weight=86 blockId=sendAdvancerCommand block="Advancerjoystick auslesen und Werte an Advancer senden"
     export function sendAdvancerCommand() {
         let advancerSpeed = handlebit.getSensorValue(handlebit.Direction.DIR_X, advancerJoystick)
         radio.sendNumber(advancerSpeed)
