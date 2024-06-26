@@ -115,7 +115,7 @@ namespace nanoMedForLife {
      * @param optionsOrCallback Optional configuration object or callback function
      * @param callbackOrUndefined Optional callback function
      */
-    //% weight=86 blockId=receivingValues block="Wenn Advancerwert |%advancerSpeed| empfangen"
+    //% weight=86 blockId=receivingValues block="wenn Advancerwert |%advancerSpeed| empfangen"
     export function onReceivedNumberHandler(
         optionsOrCallback: number | ((radvancerSpeed: number) => void),
         callbackOrUndefined?: (advancerSpeed: number) => void
