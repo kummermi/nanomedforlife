@@ -51,7 +51,7 @@ namespace nonoMedForLife {
     /**
      * Set the variable magnetabstand to either 1 or 2
      */
-    //% weight=86 blockId=setMagnetabstand block="setze Magnetabstand auf |$abstand| (1 oder 2) "
+    //% weight=86 blockId=setMagnetabstand block="setze Magnetabstand auf |%abstand| (1 oder 2) "
     export function setMagnetabstand(abstand: number) {
         if (abstand === 1 || abstand === 2) {
             magnetabstand = abstand;
