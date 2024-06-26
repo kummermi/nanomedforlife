@@ -1,7 +1,7 @@
 /*
 * Magnetic Actuation with Advancer Inclusion
 */
-//% weight=10 icon="\uf11b" color=#f5bf42 block="NanoMed for Life" 
+//% weight=10 icon="\uf11b" color=#0a0a0a block="NanoMed for Life" 
 namespace nanoMedForLife {
     let sideBeitrag = -1
     let hauptBeitrag = -1
@@ -51,7 +51,7 @@ namespace nanoMedForLife {
     /**
      * Set the variable magnetabstand to either 1 or 2
      */
-    //% weight=86 blockId=setMagnetabstand block="wechsle Magnetabstend 1 <-> 2"
+    //% weight=86 blockId=setMagnetabstand block="wechsle Magnetabstand 1 <-> 2"
     export function setMagnetabstand() {
         if (magnetabstand === 1) {
             magnetabstand = 2
@@ -72,7 +72,7 @@ namespace nanoMedForLife {
      * Setting the radio group to desired number
      * @param frequency desired channel for radio transfer
      */
-    //% weight=86 blockId=setRadioGroup block="setze den Kommunikationskanal auf |%frequency|"
+    //% weight=86 blockId=setRadioGroup block="setze den Funkkanal auf |%frequency|"
     export function setRadioGroup(frequency: number) {
         radioGroup = frequency
         radio.setGroup(radioGroup)
@@ -92,7 +92,7 @@ namespace nanoMedForLife {
     /**
      * Swap Joysticks back and forth
      */
-    //% weight=86 blockId=swapJS block="Joystick wechseln"
+    //% weight=86 blockId=swapJS block="Joystickfunktion tauschen"
     export function swapJS() {
         let temp = magnetJoystick
         magnetJoystick = advancerJoystick
@@ -115,7 +115,7 @@ namespace nanoMedForLife {
      * @param optionsOrCallback Optional configuration object or callback function
      * @param callbackOrUndefined Optional callback function
      */
-    //% weight=86 blockId=receivingValues block="wenn Advancerwert |%advancerSpeed| empfangen"
+    //% weight=86 blockId=receivingValues block="empfange Wert für |%advancerSpeed|"
     export function onReceivedNumberHandler(
         optionsOrCallback: number | ((radvancerSpeed: number) => void),
         callbackOrUndefined?: (advancerSpeed: number) => void
@@ -143,7 +143,7 @@ namespace nanoMedForLife {
      * Function setting magnetic field according to operation with or without wippen
      * @param magnetJoystick
      */
-    //% weight=86 blockId=setMagneticField block="Magnetfeldjoystick auf Spielfeld abbilden"
+    //% weight=86 blockId=setMagneticField block="Magnetfeld-Joystick auslesen und Werte an Spielfeld senden"
     export function setMagneticField() {
         winkel = handlebit.getAngle(magnetJoystick)
         auslenkung = handlebit.getDeflection(magnetJoystick)
@@ -249,7 +249,7 @@ namespace nanoMedForLife {
      * Function sending the advancer joystick deflection along X-axis to the advancer driver
      * 
      */
-    //% weight=86 blockId=sendAdvancerCommand block="Advancerjoystick auslesen und Werte an Advancer senden"
+    //% weight=86 blockId=sendAdvancerCommand block="Advancer-Joystick auslesen und Werte an Advancer senden"
     export function sendAdvancerCommand() {
         let advancerSpeed = handlebit.getSensorValue(handlebit.Direction.DIR_X, advancerJoystick)
         radio.sendNumber(advancerSpeed)
