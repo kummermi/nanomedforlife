@@ -103,13 +103,12 @@ namespace nanoMedForLife {
     /**
     * Handle received number with a callback
     * @param callback function to handle the event
-    * @param receivedNumber is the sent number over radio
     */
     //% weight=86 blockId=receivingValues block="Advancerwert |%receivedNumber| lesen"
-    export function onReceivedNumberHadler(callback: () => void): void {
+    export function onReceivedNumberHadler(callback: (receivedNumber: number) => void): void {
         radio.onReceivedNumber(function (receivedNumber: number){
             lastReceivedNumber = receivedNumber
-            callback()
+            callback(receivedNumber)
         })
     }
 
