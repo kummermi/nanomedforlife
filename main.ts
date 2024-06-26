@@ -128,7 +128,7 @@ namespace nanoMedForLife {
             actualCallback = callbackOrUndefined;
         } else {
             // Fallback in case no valid callback is provided
-            actualCallback = function(advancerSpeedr: number) {
+            actualCallback = function(advancerSpeed: number) {
                 console.log("Received number: " + advancerSpeed);
             };
         }
