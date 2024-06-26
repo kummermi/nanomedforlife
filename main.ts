@@ -1,7 +1,7 @@
 /*
 * Magnetic Actuation with Advancer Inclusion
 */
-//% weight=10 icon="\uf11b" color=#d736ff block="NanoMed for Life" 
+//% weight=10 icon="\uf11b" color=#f5f542 block="NanoMed for Life" 
 namespace nonoMedForLife {
     let sideBeitrag = -1
     let hauptBeitrag = -1
@@ -51,7 +51,7 @@ namespace nonoMedForLife {
     /**
      * Set the variable magnetabstand to either 1 or 2
      */
-    //% weight=86 blockId=setMagnetabstand block="setze den gewünschten Magnetabstand"
+    //% weight=86 blockId=setMagnetabstand block="setze Magnetabstand auf |$abstand| (1 oder 2) "
     export function setMagnetabstand(abstand: number) {
         if (abstand === 1 || abstand === 2) {
             magnetabstand = abstand;
@@ -73,10 +73,10 @@ namespace nonoMedForLife {
      * Setting the radio group to desired number
      * @param frequency desired channel for radio transfer
      */
-    //% weight=86 blockId=setRadioGroup block="Setze den Kommunicationskanal auf |%frequency|"
+    //% weight=86 blockId=setRadioGroup block="Setze den Kommunikationskanal auf |%frequency|"
     export function setRadioGroup(frequency: number) {
         radioGroup = frequency
-        radio.setGroup(radioGroup)
+        radio.setGroup(radioGroup)s
         basic.showNumber(radioGroup)
     }
 
