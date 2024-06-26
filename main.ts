@@ -116,9 +116,9 @@ namespace nonoMedForLife {
      * @param joystick is the desired joystick for the control of the magnetic field
      */
     //% weight=86 blockId=setMagneticField block="Joystick |%magnetJoystick| auf Magnetfeld abbilden"
-    export function setMagneticField(magnetJoystick) {
-        winkel = handlebit.getAngle(joystick)
-        auslenkung = handlebit.getDeflection(joystick)
+    export function setMagneticField() {
+        winkel = handlebit.getAngle(magnetJoystick)
+        auslenkung = handlebit.getDeflection(magnetJoystick)
         MagneticNavigation.zeroAllMagnets()
         if (wippen) {
             if (offset_magnet == magnetabstand) {
