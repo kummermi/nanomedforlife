@@ -1,7 +1,7 @@
 /*
 * Magnetic Actuation with Advancer Inclusion
 */
-//% weight=10 icon="\uf11b" color=#f5f542 block="NanoMed for Life" 
+//% weight=10 icon="\uf11b" color=#f5bf42 block="NanoMed for Life" 
 namespace nonoMedForLife {
     let sideBeitrag = -1
     let hauptBeitrag = -1
@@ -13,7 +13,7 @@ namespace nonoMedForLife {
     let winkel = -1
     let angle = -1
     let wippen = 0
-    let magnetabstand = 0
+    let magnetabstand = 1
     let vorzeichen = 1
     let modus = 0
     let offset_magnet = 2
@@ -35,7 +35,7 @@ namespace nonoMedForLife {
     /**
      * Changing between wippen and homogeneous mode
      */
-    //% weight=86 blockId=switchWippen block="Wechsle zwischen Gradient- und Homogenmodus"
+    //% weight=86 blockId=switchWippen block="wechsle zwischen Gradienten- und Homogenfeld"
     export function switchWippen() {
         wippen = 1 - wippen
     }
@@ -43,7 +43,7 @@ namespace nonoMedForLife {
     /**
      * Changing between oascillating and static steering mode
      */
-    //% weight=86 blockId=switchModus block="Wechsle zwischen Oszillieren und statischem Modus"
+    //% weight=86 blockId=switchModus block="Wechsle modus zwischen Oszillieren und statisch"
     export function switchModus() {
         modus = 1 - modus
     }
@@ -51,20 +51,19 @@ namespace nonoMedForLife {
     /**
      * Set the variable magnetabstand to either 1 or 2
      */
-    //% weight=86 blockId=setMagnetabstand block="setze Magnetabstand auf |%abstand| (1 oder 2) "
-    export function setMagnetabstand(abstand: number) {
-        if (abstand === 1 || abstand === 2) {
-            magnetabstand = abstand;
+    //% weight=86 blockId=setMagnetabstand block="wechsle Magnetabstend 1 <-> 2"
+    export function setMagnetabstand() {
+        if (magnetabstand === 1) {
+            magnetabstand = 2
         } else {
-            console.log("Invalid magnetabstand value") 
-            music.play(music.tonePlayable(262, music.beat(BeatFraction.Whole)), music.PlaybackMode.UntilDone)
+            magnetabstand = 1
         }
     }
 
      /**
      * Changing polarity of the coils
      */
-    //% weight=86 blockId=switchPolarity block="Wechsel der Polarität der Magnetspulen"
+    //% weight=86 blockId=switchPolarity block="wechsle Polarität der Magnetspulen"
     export function switchPolarity() {
         vorzeichen = -vorzeichen
     }
@@ -73,10 +72,10 @@ namespace nonoMedForLife {
      * Setting the radio group to desired number
      * @param frequency desired channel for radio transfer
      */
-    //% weight=86 blockId=setRadioGroup block="Setze den Kommunikationskanal auf |%frequency|"
+    //% weight=86 blockId=setRadioGroup block="setze den Kommunikationskanal auf |%frequency|"
     export function setRadioGroup(frequency: number) {
         radioGroup = frequency
-        radio.setGroup(radioGroup)s
+        radio.setGroup(radioGroup)
         basic.showNumber(radioGroup)
     }
 
@@ -116,8 +115,8 @@ namespace nonoMedForLife {
      * Function setting magnetic field according to operation with or without wippen
      * @param joystick is the desired joystick for the control of the magnetic field
      */
-    //% weight=86 blockId=setMagneticField block=" |%joystick| auf Magnetfeld abbilden"
-    export function setMagneticField(joystick: handlebit.Joystick = magnetJoystick) {
+    //% weight=86 blockId=setMagneticField block="Joystick |%magnetJoystick| auf Magnetfeld abbilden"
+    export function setMagneticField(magnetJoystick) {
         winkel = handlebit.getAngle(joystick)
         auslenkung = handlebit.getDeflection(joystick)
         MagneticNavigation.zeroAllMagnets()
