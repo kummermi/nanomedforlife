@@ -29,7 +29,7 @@ namespace nanoMedForLife {
     export function init() {
         handlebit.initialize()
         //radio.setGroup(radioGroup)
-        basic.showNumber(radioGroup)
+        // basic.showNumber(radioGroup)
     }
 
     /**
@@ -265,8 +265,10 @@ namespace nanoMedForLife {
         let motorPowerX = lastReceivedNumber
         if (motorPowerX > 2 || motorPowerX < -2) {
             motor.MotorRun(motor.Motors.M1, motor.Dir.CW, motorPowerX)
-            basic.showNumber(motorPowerX)
+            // basic.showNumber(motorPowerX)
             motorPowerX = 0
+        } else {
+            motor.motorStop(motor.Motors.M1)
         }
     }
 }
