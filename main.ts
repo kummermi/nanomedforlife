@@ -100,16 +100,39 @@ namespace nanoMedForLife {
         advancerJoystick = temp
     }
 
+    // /**
+    // * Handle received number with a callback
+    // * @param callback function to handle the event
+    // */
+    // //% weight=86 blockId=receivingValues block="Advancerwert |%receivedNumber| lesen"
+    // export function onReceivedNumberHadler(callback: (receivedNumber: number) => void): void {
+    //     radio.onReceivedNumber(function (receivedNumber: number){
+    //         lastReceivedNumber = receivedNumber
+    //         callback(receivedNumber)
+    //     })
+    // }
     /**
-    * Handle received number with a callback
-    * @param callback function to handle the event
-    */
-    //% weight=86 blockId=receivingValues block="Advancerwert |%receivedNumber| lesen"
-    export function onReceivedNumberHadler(callback: (receivedNumber: number) => void): void {
-        radio.onReceivedNumber(function (receivedNumber: number){
-            lastReceivedNumber = receivedNumber
-            callback(receivedNumber)
-        })
+     * Handle received number with a callback
+     * @param options Optional configuration object
+     * @param callback function to handle the event with the received number
+     */
+    //% weight=86 blockId=receivingValues block="Wenn Advancerwert empfangen |%receivedNumber|"
+    export function onReceivedNumberHandler(
+        options: number | (() => void),
+        callback?: (receivedNumber: number) => void
+    ): void {
+        let actualCallback: (receivedNumber: number) => void;
+
+        if (typeof options === 'function') {
+            actualCallback = options as (receivedNumber: number) => void;
+        } else {
+            actualCallback = callback!;
+        }
+
+        radio.onReceivedNumber(function (receivedNumber: number) {
+            lastReceivedNumber = receivedNumber;
+            actualCallback(receivedNumber);
+        });
     }
 
     /**
