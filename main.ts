@@ -103,8 +103,9 @@ namespace nanoMedForLife {
     /**
     * Handle received number with a callback
     * @param callback function to handle the event
+    * @param receivedNumber is the sent number over radio
     */
-    //% weight=86 blockId=receivingValues block="Advancerwerte Lesen"
+    //% weight=86 blockId=receivingValues block="Advancerwert |%receivedNumber| lesen"
     export function onReceivedNumberHadler(callback: () => void): void {
         radio.onReceivedNumber(function (receivedNumber: number){
             lastReceivedNumber = receivedNumber
@@ -114,9 +115,9 @@ namespace nanoMedForLife {
 
     /**
      * Function setting magnetic field according to operation with or without wippen
-     * @param joystick is the desired joystick for the control of the magnetic field
+     * @param magnetJoystick
      */
-    //% weight=86 blockId=setMagneticField block="Magnetfeldjoystick auf Spielfeld abbilden"
+    //% weight=86 blockId=setMagneticField block="Magnetfeldjoystick |%magnetJoystick| auf Spielfeld abbilden"
     export function setMagneticField() {
         winkel = handlebit.getAngle(magnetJoystick)
         auslenkung = handlebit.getDeflection(magnetJoystick)
