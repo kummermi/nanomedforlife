@@ -2,7 +2,7 @@
 * Magnetic Actuation with Advancer Inclusion
 */
 //% weight=10 icon="\uf11b" color=#f5bf42 block="NanoMed for Life" 
-namespace nonoMedForLife {
+namespace nanoMedForLife {
     let sideBeitrag = -1
     let hauptBeitrag = -1
     let visAvisSideKick = -1
@@ -43,7 +43,7 @@ namespace nonoMedForLife {
     /**
      * Changing between oascillating and static steering mode
      */
-    //% weight=86 blockId=switchModus block="Wechsle modus zwischen Oszillieren und statisch"
+    //% weight=86 blockId=switchModus block="wechsle modus zwischen Oszillieren und statisch"
     export function switchModus() {
         modus = 1 - modus
     }
@@ -115,7 +115,7 @@ namespace nonoMedForLife {
      * Function setting magnetic field according to operation with or without wippen
      * @param joystick is the desired joystick for the control of the magnetic field
      */
-    //% weight=86 blockId=setMagneticField block="Joystick |%magnetJoystick| auf Magnetfeld abbilden"
+    //% weight=86 blockId=setMagneticField block="Magnetfeldjoystick auf Spielfeld abbilden"
     export function setMagneticField() {
         winkel = handlebit.getAngle(magnetJoystick)
         auslenkung = handlebit.getDeflection(magnetJoystick)
@@ -221,7 +221,7 @@ namespace nonoMedForLife {
      * Function sending the advancer joystick deflection along X-axis to the advancer driver
      * 
      */
-    //% weight=86 blockId=sendAdvancerCommand block="Advancer Geschwindigkeit lesen und an Advancer senden"
+    //% weight=86 blockId=sendAdvancerCommand block="Advancerjoystick auslesen und an Advancer senden"
     export function sendAdvancerCommand() {
         let advancerSpeed = handlebit.getSensorValue(handlebit.Direction.DIR_X, advancerJoystick)
         radio.sendNumber(advancerSpeed)
@@ -231,7 +231,7 @@ namespace nonoMedForLife {
      * Function receiving the advancer joystick deflection along X-axis and sending it to the motor controller
      * 
      */
-    //% weight=86 blockId=setAdvancerSpeed block="Advancer Wert lesen und Advancer antreiben"
+    //% weight=86 blockId=setAdvancerSpeed block="Advancerwerte empfangen und Advancer antreiben"
     export function setAdvancerSpeed() {
         let motorPowerX = lastReceivedNumber
         if (motorPowerX > 2 || motorPowerX < -2) {
