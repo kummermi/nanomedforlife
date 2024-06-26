@@ -87,7 +87,6 @@ namespace nanoMedForLife {
     //% weight=86 blockId=onButtonPressed block="wenn Knopf |%button| gedrückt"
     export function wrappedOnButtonPressed(button: handlebit.Button, body: Action) {
         control.onEvent(EventBusSource.MES_DPAD_CONTROLLER_ID, button, body)
-        basic.showString(button.toString())
     }
 
     /**
@@ -116,12 +115,12 @@ namespace nanoMedForLife {
      * @param optionsOrCallback Optional configuration object or callback function
      * @param callbackOrUndefined Optional callback function
      */
-    //% weight=86 blockId=receivingValues block="Wenn Advancerwert empfangen |%receivedNumber|"
+    //% weight=86 blockId=receivingValues block="Wenn Advancerwert |%advancerSpeed| empfangen"
     export function onReceivedNumberHandler(
-        optionsOrCallback: number | ((receivedNumber: number) => void),
-        callbackOrUndefined?: (receivedNumber: number) => void
+        optionsOrCallback: number | ((radvancerSpeed: number) => void),
+        callbackOrUndefined?: (advancerSpeed: number) => void
     ): void {
-        let actualCallback: (receivedNumber: number) => void;
+        let actualCallback: (advancerSpeed: number) => void;
 
         if (typeof optionsOrCallback === 'function') {
             actualCallback = optionsOrCallback;
@@ -129,14 +128,14 @@ namespace nanoMedForLife {
             actualCallback = callbackOrUndefined;
         } else {
             // Fallback in case no valid callback is provided
-            actualCallback = function(receivedNumber: number) {
-                console.log("Received number: " + receivedNumber);
+            actualCallback = function(advancerSpeedr: number) {
+                console.log("Received number: " + advancerSpeed);
             };
         }
 
-        radio.onReceivedNumber(function (receivedNumber: number) {
-            lastReceivedNumber = receivedNumber;
-            actualCallback(receivedNumber);
+        radio.onReceivedNumber(function (advancerSpeed: number) {
+            lastReceivedNumber = advancerSpeed;
+            actualCallback(advancerSpeed);
         });
     }
 
@@ -144,7 +143,7 @@ namespace nanoMedForLife {
      * Function setting magnetic field according to operation with or without wippen
      * @param magnetJoystick
      */
-    //% weight=86 blockId=setMagneticField block="Magnetfeldjoystick |%magnetJoystick| auf Spielfeld abbilden"
+    //% weight=86 blockId=setMagneticField block="Magnetfeldjoystick auf Spielfeld abbilden"
     export function setMagneticField() {
         winkel = handlebit.getAngle(magnetJoystick)
         auslenkung = handlebit.getDeflection(magnetJoystick)
@@ -230,7 +229,7 @@ namespace nanoMedForLife {
                 visAvisSideKick = 2
                 hauptBeitrag = auslenkung * Math.cos(2 * (winkel - 270)/180*Math.PI)
                 sideBeitrag = auslenkung * Math.sin(2 * (winkel - 270)/180*Math.PI)
-            } else if (winkel < 360) {
+            } else if (winkel <= 360) {
                 hauptmagnet = 6
                 sideKick = 7
                 visAvis = 2
@@ -260,7 +259,7 @@ namespace nanoMedForLife {
      * Function receiving the advancer joystick deflection along X-axis and sending it to the motor controller
      * 
      */
-    //% weight=86 blockId=setAdvancerSpeed block="Advancerwerte empfangen und Advancer antreiben"
+    //% weight=86 blockId=setAdvancerSpeed block="Advancer antreiben"
     export function setAdvancerSpeed() {
         let motorPowerX = lastReceivedNumber
         if (motorPowerX > 2 || motorPowerX < -2) {
