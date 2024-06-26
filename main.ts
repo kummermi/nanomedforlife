@@ -113,20 +113,25 @@ namespace nanoMedForLife {
     // }
     /**
      * Handle received number with a callback
-     * @param options Optional configuration object
-     * @param callback function to handle the event with the received number
+     * @param optionsOrCallback Optional configuration object or callback function
+     * @param callbackOrUndefined Optional callback function
      */
     //% weight=86 blockId=receivingValues block="Wenn Advancerwert empfangen |%receivedNumber|"
     export function onReceivedNumberHandler(
-        options: number | (() => void),
-        callback?: (receivedNumber: number) => void
+        optionsOrCallback: number | ((receivedNumber: number) => void),
+        callbackOrUndefined?: (receivedNumber: number) => void
     ): void {
         let actualCallback: (receivedNumber: number) => void;
 
-        if (typeof options === 'function') {
-            actualCallback = options as (receivedNumber: number) => void;
+        if (typeof optionsOrCallback === 'function') {
+            actualCallback = optionsOrCallback;
+        } else if (typeof callbackOrUndefined === 'function') {
+            actualCallback = callbackOrUndefined;
         } else {
-            actualCallback = callback!;
+            // Fallback in case no valid callback is provided
+            actualCallback = function(receivedNumber: number) {
+                console.log("Received number: " + receivedNumber);
+            };
         }
 
         radio.onReceivedNumber(function (receivedNumber: number) {
