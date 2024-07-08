@@ -21,6 +21,10 @@ namespace nanoMedForLife {
     let lastReceivedNumber = 0
     let magnetJoystick = handlebit.Joystick.JOYSTICK_LEFT
     let advancerJoystick = handlebit.Joystick.JOYSTICK_RIGHT
+   // let lastReceivedTime = control.millis()
+    let dataReceived = false
+    let motorPowerX = 0
+
 
     /**
      * Initializing all processes requiring initialization
@@ -53,11 +57,12 @@ namespace nanoMedForLife {
      */
     //% weight=86 blockId=setMagnetabstand block="wechsle Magnetabstand 1 <-> 2"
     export function setMagnetabstand() {
-        if (magnetabstand === 1) {
-            magnetabstand = 2
-        } else {
-            magnetabstand = 1
-        }
+        magnetabstand = magnetabstand === 1 ? 2 : 1
+        // if (magnetabstand === 1) {
+        //     magnetabstand = 2
+        // } else {
+        //     magnetabstand = 1
+        // }
     }
 
      /**
@@ -135,8 +140,73 @@ namespace nanoMedForLife {
 
         radio.onReceivedNumber(function (advancerSpeed: number) {
             lastReceivedNumber = advancerSpeed;
+            dataReceived = true;
+           // lastReceivedTime = control.millis();
             actualCallback(advancerSpeed);
         });
+    }
+
+    function getHauptMagnet(angle: number): number {
+    if (angle < 45) return 7
+    if (angle < 90) return 8
+    if (angle < 135) return 1
+    if (angle < 180) return 2
+    if (angle < 225) return 3
+    if (angle < 270) return 4
+    if (angle < 315) return 5
+    return 6
+    }
+
+    function calculateContributions(angle: number, deflection: number) {
+        if (angle < 45) {
+            sideKick = 8
+            visAvis = 3
+            visAvisSideKick = 4
+            hauptBeitrag = deflection * Math.cos(2 * angle / 180 * Math.PI)
+            sideBeitrag = deflection * Math.sin(2 * angle / 180 * Math.PI)
+        } else if (angle < 90) {
+            sideKick = 1
+            visAvis = 4
+            visAvisSideKick = 5
+            hauptBeitrag = deflection * Math.cos(2 * (angle - 45) / 180 * Math.PI)
+            sideBeitrag = deflection * Math.sin(2 * (angle - 45) / 180 * Math.PI)
+        } else if (angle < 135) {
+            sideKick = 2
+            visAvis = 5
+            visAvisSideKick = 6
+            hauptBeitrag = deflection * Math.cos(2 * (angle - 90) / 180 * Math.PI)
+            sideBeitrag = deflection * Math.sin(2 * (angle - 90) / 180 * Math.PI)
+        } else if (angle < 180) {
+            sideKick = 3
+            visAvis = 6
+            visAvisSideKick = 7
+            hauptBeitrag = deflection * Math.cos(2 * (angle - 135) / 180 * Math.PI)
+            sideBeitrag = deflection * Math.sin(2 * (angle - 135) / 180 * Math.PI)
+        } else if (angle < 225) {
+            sideKick = 4
+            visAvis = 7
+            visAvisSideKick = 8
+            hauptBeitrag = deflection * Math.cos(2 * (angle - 180) / 180 * Math.PI)
+            sideBeitrag = deflection * Math.sin(2 * (angle - 180) / 180 * Math.PI)
+        } else if (angle < 270) {
+            sideKick = 5
+            visAvis = 8
+            visAvisSideKick = 1
+            hauptBeitrag = deflection * Math.cos(2 * (angle - 225) / 180 * Math.PI)
+            sideBeitrag = deflection * Math.sin(2 * (angle - 225) / 180 * Math.PI)
+        } else if (angle < 315) {
+            sideKick = 6
+            visAvis = 1
+            visAvisSideKick = 2
+            hauptBeitrag = deflection * Math.cos(2 * (angle - 270) / 180 * Math.PI)
+            sideBeitrag = deflection * Math.sin(2 * (angle - 270) / 180 * Math.PI)
+        } else {
+            sideKick = 7
+            visAvis = 2
+            visAvisSideKick = 3
+            hauptBeitrag = deflection * Math.cos(2 * (angle - 315) / 180 * Math.PI)
+            sideBeitrag = deflection * Math.sin(2 * (angle - 315) / 180 * Math.PI)
+        }
     }
 
     /**
@@ -149,28 +219,8 @@ namespace nanoMedForLife {
         auslenkung = handlebit.getDeflection(magnetJoystick)
         MagneticNavigation.zeroAllMagnets()
         if (wippen) {
-            if (offset_magnet == magnetabstand) {
-                offset_magnet = 8 - magnetabstand
-            } else {
-                offset_magnet = magnetabstand
-            }
-            if (winkel < 45) {
-                hauptmagnet = 7
-            } else if (winkel < 90) {
-                hauptmagnet = 8
-            } else if (winkel < 135) {
-                hauptmagnet = 1
-            } else if (winkel < 180) {
-                hauptmagnet = 2
-            } else if (winkel < 225) {
-                hauptmagnet = 3
-            } else if (winkel < 270) {
-                hauptmagnet = 4
-            } else if (winkel < 315) {
-                hauptmagnet = 5
-            } else if (winkel < 360) {
-                hauptmagnet = 6
-            }
+            offset_magnet = (offset_magnet == magnetabstand) ? 8 - magnetabstand : magnetabstand
+            hauptmagnet = getHauptMagnet(winkel)
             MagneticNavigation.setMagnetPower(hauptmagnet, vorzeichen * auslenkung)
             if (modus) {
                 if (magnetabstand == 2) {
@@ -180,63 +230,8 @@ namespace nanoMedForLife {
                 MagneticNavigation.setMagnetPower((hauptmagnet + offset_magnet - 1) % 8 + 1, vorzeichen * auslenkung)
             }
         } else {
-            if (winkel < 45) {
-                hauptmagnet = 7
-                sideKick = 8
-                visAvis = 3
-                visAvisSideKick = 4
-                hauptBeitrag = auslenkung * Math.cos(2 * winkel/180*Math.PI)
-                sideBeitrag = auslenkung * Math.sin(2 * winkel/180*Math.PI)
-            } else if (winkel < 90) {
-                hauptmagnet = 8
-                sideKick = 1
-                visAvis = 4
-                visAvisSideKick = 5
-                hauptBeitrag = auslenkung * Math.cos(2 * (winkel - 45)/180*Math.PI)
-                sideBeitrag = auslenkung * Math.sin(2 * (winkel - 45)/180*Math.PI)
-            } else if (winkel < 135) {
-                hauptmagnet = 1
-                sideKick = 2
-                visAvis = 5
-                visAvisSideKick = 6
-                hauptBeitrag = auslenkung * Math.cos(2 * (winkel - 90)/180*Math.PI)
-                sideBeitrag = auslenkung * Math.sin(2 * (winkel - 90)/180*Math.PI)
-            } else if (winkel < 180) {
-                hauptmagnet = 2
-                sideKick = 3
-                visAvis = 6
-                visAvisSideKick = 7
-                hauptBeitrag = auslenkung * Math.cos(2 * (winkel - 135)/180*Math.PI)
-                sideBeitrag = auslenkung * Math.sin(2 * (winkel - 135)/180*Math.PI)
-            } else if (winkel < 225) {
-                hauptmagnet = 3
-                sideKick = 4
-                visAvis = 7
-                visAvisSideKick = 8
-                hauptBeitrag = auslenkung * Math.cos(2 * (winkel - 180)/180*Math.PI)
-                sideBeitrag = auslenkung * Math.sin(2 * (winkel - 180)/180*Math.PI)
-            } else if (winkel < 270) {
-                hauptmagnet = 4
-                sideKick = 5
-                visAvis = 8
-                visAvisSideKick = 1
-                hauptBeitrag = auslenkung * Math.cos(2 * (winkel - 225)/180*Math.PI)
-                sideBeitrag = auslenkung * Math.sin(2 * (winkel - 225)/180*Math.PI)
-            } else if (winkel < 315) {
-                hauptmagnet = 5
-                sideKick = 6
-                visAvis = 1
-                visAvisSideKick = 2
-                hauptBeitrag = auslenkung * Math.cos(2 * (winkel - 270)/180*Math.PI)
-                sideBeitrag = auslenkung * Math.sin(2 * (winkel - 270)/180*Math.PI)
-            } else if (winkel <= 360) {
-                hauptmagnet = 6
-                sideKick = 7
-                visAvis = 2
-                visAvisSideKick = 3
-                hauptBeitrag = auslenkung * Math.cos(2 * (winkel - 315)/180*Math.PI)
-                sideBeitrag = auslenkung * Math.sin(2 * (winkel - 315)/180*Math.PI)
-            }
+            hauptmagnet = getHauptMagnet(winkel)
+            calculateContributions (winkel, auslenkung)
             MagneticNavigation.setMagnetPower(hauptmagnet, vorzeichen * hauptBeitrag)
             MagneticNavigation.setMagnetPower(sideKick, vorzeichen * sideBeitrag)
             MagneticNavigation.setMagnetPower(visAvis, -1 * vorzeichen * hauptBeitrag)
@@ -252,7 +247,9 @@ namespace nanoMedForLife {
     //% weight=86 blockId=sendAdvancerCommand block="Advancer-Joystick auslesen und Werte an Advancer senden"
     export function sendAdvancerCommand() {
         let advancerSpeed = handlebit.getSensorValue(handlebit.Direction.DIR_X, advancerJoystick)
-        radio.sendNumber(advancerSpeed)
+        if (advancerSpeed > 2 || advancerSpeed < -2) {
+            radio.sendNumber(advancerSpeed)
+        }
     }
 
     /**
@@ -261,11 +258,10 @@ namespace nanoMedForLife {
      */
     //% weight=86 blockId=setAdvancerSpeed block="Advancer antreiben"
     export function setAdvancerSpeed() {
-        let motorPowerX = lastReceivedNumber
-        if (motorPowerX > 2 || motorPowerX < -2) {
+        if (dataReceived) {
+            motorPowerX = lastReceivedNumber
             motor.MotorRun(motor.Motors.M1, motor.Dir.CW, motorPowerX)
-            // basic.showNumber(motorPowerX)
-            motorPowerX = 0
+            dataReceived = false
         } else {
             motor.motorStop(motor.Motors.M1)
         }
