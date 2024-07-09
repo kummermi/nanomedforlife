@@ -263,7 +263,18 @@ namespace nanoMedForLife {
             motor.MotorRun(motor.Motors.M1, motor.Dir.CW, motorPowerX)
             dataReceived = false
         } else {
+            basic.showNumber(dataReceived)
             motor.motorStop(motor.Motors.M1)
         }
+    }
+
+    /**
+     * Function for setting the advancer reading frequency of the joystick command
+     * @param zeit sets the time constant for reading out the advancer speed
+     * 
+     */
+    //% wight=86 blockId=setAdvancerReadFrequency block='setze Advancer Zeitkonstante auf |%zeit| ms'
+    export function setAdvancerReadTime (number: zeit = 40) {
+
     }
 }
