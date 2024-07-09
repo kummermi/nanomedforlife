@@ -143,6 +143,8 @@ namespace nanoMedForLife {
             lastReceivedNumber = advancerSpeed;
             dataReceived = true;
            // lastReceivedTime = control.millis();
+            basic.showNumber(advancerSpeed)
+            basic.showNumber(+ dataReceived)
             actualCallback(advancerSpeed);
         });
     }
