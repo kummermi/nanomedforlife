@@ -269,13 +269,13 @@ namespace nanoMedForLife {
         }
     }
 
-    /**
-     * Function for setting the advancer reading frequency of the joystick command
-     * @param zeit sets the time constant for reading out the advancer speed
-     * 
-     */
-    //% wight=86 blockId=setAdvancerReadFrequency block='setze Advancer Zeitkonstante auf |%zeit| ms'
-    export function setAdvancerReadTime (number: zeit = 40) {
-        updateTimeConstant = zeit
-    }
+    // /**
+    //  * Function for setting the advancer reading frequency of the joystick command
+    //  * @param zeit sets the time constant for reading out the advancer speed
+    //  * 
+    //  */
+    // //% wight=86 blockId=setAdvancerReadFrequency block='setze Advancer Zeitkonstante auf |%zeit| ms'
+    // export function setAdvancerReadTime (number: zeit = 40) {
+    //     updateTimeConstant = zeit
+    // }
 }
