@@ -24,6 +24,7 @@ namespace nanoMedForLife {
    // let lastReceivedTime = control.millis()
     let dataReceived = false
     let motorPowerX = 0
+    let updateTimeConstant = 40
 
 
     /**
@@ -263,7 +264,7 @@ namespace nanoMedForLife {
             motor.MotorRun(motor.Motors.M1, motor.Dir.CW, motorPowerX)
             dataReceived = false
         } else {
-            basic.showNumber(dataReceived)
+            basic.showNumber(+ dataReceived)
             motor.motorStop(motor.Motors.M1)
         }
     }
@@ -275,6 +276,6 @@ namespace nanoMedForLife {
      */
     //% wight=86 blockId=setAdvancerReadFrequency block='setze Advancer Zeitkonstante auf |%zeit| ms'
     export function setAdvancerReadTime (number: zeit = 40) {
-
+        updateTimeConstant = zeit
     }
 }
