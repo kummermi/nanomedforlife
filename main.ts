@@ -26,6 +26,7 @@ namespace nanoMedForLife {
     let motorPowerX = 0
     let updateTimeConstant = 40
 
+    let ctr = 0
 
     /**
      * Initializing all processes requiring initialization
@@ -262,6 +263,16 @@ namespace nanoMedForLife {
      */
     //% weight=86 blockId=setAdvancerSpeed block="Advancer antreiben"
     export function setAdvancerSpeed() {
+        ctr++
+        if (ctr < 10) {
+            basic.showIcon(IconNames.Yes)
+        }
+        else {
+            basic.showIcon(IconNames.No)
+            ctr = 0
+        }
+
+        /*
         if (dataReceived) {
             motorPowerX = lastReceivedNumber
             motor.MotorRun(motor.Motors.M1, motor.Dir.CW, motorPowerX)
@@ -270,6 +281,7 @@ namespace nanoMedForLife {
             basic.showIcon(IconNames.Yes)
             //motor.motorStop(motor.Motors.M1)
         }
+        */
     }
 
     // /**
