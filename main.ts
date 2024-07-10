@@ -142,10 +142,7 @@ namespace nanoMedForLife {
 
         radio.onReceivedNumber(function (advancerSpeed: number) {
             lastReceivedNumber = advancerSpeed;
-            if (advancerSpeed != 0) {
-                //dataReceived = true;    
-            }
-            
+            dataReceived = true;                
            // lastReceivedTime = control.millis();
             actualCallback(advancerSpeed);
         });
@@ -252,9 +249,9 @@ namespace nanoMedForLife {
     //% weight=86 blockId=sendAdvancerCommand block="Advancer-Joystick auslesen und Werte an Advancer senden"
     export function sendAdvancerCommand() {
         let advancerSpeed = handlebit.getSensorValue(handlebit.Direction.DIR_X, advancerJoystick)
-        if (advancerSpeed > 20 || advancerSpeed < -20) {
-            //radio.sendNumber(advancerSpeed)
-        }
+        radio.sendNumber(advancerSpeed)
+
+
     }
 
     /**
@@ -263,25 +260,15 @@ namespace nanoMedForLife {
      */
     //% weight=86 blockId=setAdvancerSpeed block="Advancer antreiben"
     export function setAdvancerSpeed() {
-        ctr++
-        if (ctr < 10) {
-            basic.showIcon(IconNames.Yes)
-        }
-        else {
-            basic.showIcon(IconNames.No)
-            ctr = 0
-        }
-
-        /*
-        if (dataReceived) {
+        if ((lastReceivedNumber > 2 || lastReceivedNumber < -2) && dataReceived) {
             motorPowerX = lastReceivedNumber
             motor.MotorRun(motor.Motors.M1, motor.Dir.CW, motorPowerX)
             dataReceived = false
         } else {
             basic.showIcon(IconNames.Yes)
-            //motor.motorStop(motor.Motors.M1)
+            motor.motorStop(motor.Motors.M1)
         }
-        */
+        
     }
 
     // /**
