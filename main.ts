@@ -123,7 +123,7 @@ namespace nanoMedForLife {
      */
     //% weight=86 blockId=receivingValues block="empfange Wert für |%advancerSpeed|"
     export function onReceivedNumberHandler(
-        optionsOrCallback: number | ((radvancerSpeed: number) => void),
+        optionsOrCallback: number | ((advancerSpeed: number) => void),
         callbackOrUndefined?: (advancerSpeed: number) => void
     ): void {
         let actualCallback: (advancerSpeed: number) => void;
@@ -261,6 +261,7 @@ namespace nanoMedForLife {
     export function setAdvancerSpeed() {
         if (dataReceived) {
             motorPowerX = lastReceivedNumber
+            basic.showNumber(lastReceivedNumber)
             motor.MotorRun(motor.Motors.M1, motor.Dir.CW, motorPowerX)
             dataReceived = false
         } else {
