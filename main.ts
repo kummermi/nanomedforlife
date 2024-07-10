@@ -261,11 +261,10 @@ namespace nanoMedForLife {
     export function setAdvancerSpeed() {
         if (dataReceived) {
             motorPowerX = lastReceivedNumber
-            basic.showNumber(lastReceivedNumber)
             motor.MotorRun(motor.Motors.M1, motor.Dir.CW, motorPowerX)
             dataReceived = false
         } else {
-            basic.showNumber(+ dataReceived)
+            basic.showIcon(IconNames.Yes)
             motor.motorStop(motor.Motors.M1)
         }
     }
