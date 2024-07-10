@@ -263,6 +263,7 @@ namespace nanoMedForLife {
         if ((lastReceivedNumber > 2 || lastReceivedNumber < -2) && dataReceived) {
             motorPowerX = lastReceivedNumber
             motor.MotorRun(motor.Motors.M1, motor.Dir.CW, motorPowerX)
+            basic.clearScreen()
             dataReceived = false
         } else {
             basic.showIcon(IconNames.Yes)
