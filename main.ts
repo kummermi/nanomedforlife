@@ -246,9 +246,9 @@ namespace nanoMedForLife {
     //% weight=86 blockId=sendAdvancerCommand block="Advancer-Joystick auslesen und Werte an Advancer senden"
     export function sendAdvancerCommand() {
         let advancerSpeed = handlebit.getSensorValue(handlebit.Direction.DIR_X, advancerJoystick)
-        radio.sendNumber(advancerSpeed)
-
-
+        if (advancerSpeed > 2 || advancerSpeed < -2) {
+            radio.sendNumber(advancerSpeed)    
+        }        
     }
 
     /**
@@ -257,7 +257,7 @@ namespace nanoMedForLife {
      */
     //% weight=86 blockId=setAdvancerSpeed block="Advancer antreiben"
     export function setAdvancerSpeed() {
-        if ((lastReceivedNumber > 2 || lastReceivedNumber < -2) && dataReceived) {
+        if (dataReceived) {
             motorPowerX = lastReceivedNumber
             motor.MotorRun(motor.Motors.M1, motor.Dir.CW, motorPowerX)
             //basic.clearScreen()
