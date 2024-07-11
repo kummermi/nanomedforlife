@@ -236,7 +236,7 @@ namespace nanoMedForLife {
             MagneticNavigation.setMagnetPower(visAvis, -1 * vorzeichen * hauptBeitrag)
             MagneticNavigation.setMagnetPower(visAvisSideKick, -1 * vorzeichen * sideBeitrag)
         }
-        // MagneticNavigation.writeAll()
+        MagneticNavigation.writeAll()
     }
 
     /**
