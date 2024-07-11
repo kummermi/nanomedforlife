@@ -220,7 +220,7 @@ namespace nanoMedForLife {
         if (wippen) {
             offset_magnet = (offset_magnet == magnetabstand) ? 8 - magnetabstand : magnetabstand
             hauptmagnet = getHauptMagnet(winkel)
-            // MagneticNavigation.setMagnetPower(hauptmagnet, vorzeichen * auslenkung)
+            MagneticNavigation.setMagnetPower(hauptmagnet, vorzeichen * auslenkung)
             if (modus) {
                 if (magnetabstand == 2) {
                     // MagneticNavigation.setMagnetPower((hauptmagnet + 1 - 1) % 8 + 1, vorzeichen * auslenkung)
