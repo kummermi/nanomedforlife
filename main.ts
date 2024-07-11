@@ -24,9 +24,6 @@ namespace nanoMedForLife {
    // let lastReceivedTime = control.millis()
     let dataReceived = false
     let motorPowerX = 0
-    let updateTimeConstant = 40
-
-    let ctr = 0
 
     /**
      * Initializing all processes requiring initialization
@@ -223,23 +220,23 @@ namespace nanoMedForLife {
         if (wippen) {
             offset_magnet = (offset_magnet == magnetabstand) ? 8 - magnetabstand : magnetabstand
             hauptmagnet = getHauptMagnet(winkel)
-            MagneticNavigation.setMagnetPower(hauptmagnet, vorzeichen * auslenkung)
+            // MagneticNavigation.setMagnetPower(hauptmagnet, vorzeichen * auslenkung)
             if (modus) {
                 if (magnetabstand == 2) {
-                    MagneticNavigation.setMagnetPower((hauptmagnet + 1 - 1) % 8 + 1, vorzeichen * auslenkung)
-                    MagneticNavigation.setMagnetPower((hauptmagnet + 7 - 1) % 8 + 1, vorzeichen * auslenkung)
+                    // MagneticNavigation.setMagnetPower((hauptmagnet + 1 - 1) % 8 + 1, vorzeichen * auslenkung)
+                    // MagneticNavigation.setMagnetPower((hauptmagnet + 7 - 1) % 8 + 1, vorzeichen * auslenkung)
                 }
-                MagneticNavigation.setMagnetPower((hauptmagnet + offset_magnet - 1) % 8 + 1, vorzeichen * auslenkung)
+                // MagneticNavigation.setMagnetPower((hauptmagnet + offset_magnet - 1) % 8 + 1, vorzeichen * auslenkung)
             }
         } else {
             hauptmagnet = getHauptMagnet(winkel)
             calculateContributions (winkel, auslenkung)
-            MagneticNavigation.setMagnetPower(hauptmagnet, vorzeichen * hauptBeitrag)
-            MagneticNavigation.setMagnetPower(sideKick, vorzeichen * sideBeitrag)
-            MagneticNavigation.setMagnetPower(visAvis, -1 * vorzeichen * hauptBeitrag)
-            MagneticNavigation.setMagnetPower(visAvisSideKick, -1 * vorzeichen * sideBeitrag)
+            // MagneticNavigation.setMagnetPower(hauptmagnet, vorzeichen * hauptBeitrag)
+            // MagneticNavigation.setMagnetPower(sideKick, vorzeichen * sideBeitrag)
+            // MagneticNavigation.setMagnetPower(visAvis, -1 * vorzeichen * hauptBeitrag)
+            // MagneticNavigation.setMagnetPower(visAvisSideKick, -1 * vorzeichen * sideBeitrag)
         }
-        MagneticNavigation.writeAll()
+        // MagneticNavigation.writeAll()
     }
 
     /**
